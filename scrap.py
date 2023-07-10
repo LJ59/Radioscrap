@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # URL du site à scraper
-base_url = "http://www.radiohead.fr/discographie"
+base_url = "http://www.radiohead.fr/"
 
 # Fonction pour récupérer le contenu d'une URL donnée
 def get_page_content(url):
