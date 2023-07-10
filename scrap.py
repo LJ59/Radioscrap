@@ -1,15 +1,25 @@
 import requests
+import urllib.request
 from bs4 import BeautifulSoup
+import ssl
+
 
 # URL du site à scraper
-base_url = "http://www.radiohead.fr/"
+base_url = "http://www.radiohead.fr"
+
+# Ignorer les erreurs de certificat SSL
+context = ssl.create_default_context()
+context.check_hostname = False
+context.verify_mode = ssl.CERT_NONE
 
 # Fonction pour récupérer le contenu d'une URL donnée
 def get_page_content(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.content
-    else:
+    try:
+        response = urllib.request.urlopen(url, context=context)
+        return response.read()
+    except urllib.error.URLError as e:
+        print(f"Impossible de récupérer le contenu de l'URL : {url}")
+        print(f"Erreur : {e.reason}")
         return None
 
 # Fonction pour extraire les informations souhaitées d'une page
